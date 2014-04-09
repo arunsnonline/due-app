@@ -3,45 +3,34 @@ package com.example.fragmentsample;
 
 import java.util.List;
 
-import android.app.Activity;
+import com.example.fragmentsample.customadapter.MsgViewAdapter;
+import com.example.fragmentsample.model.SmsDue;
+
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
 public class MsgStepListFragment extends ListFragment{
 	
-	private List<String> lines;
+	private List<SmsDue> smsDues;
 	
 	
-	public void setLines(List<String> lines) {
-		this.lines = lines;
+	
+	 public void setSmsDues(List<SmsDue> smsDues) {
+		this.smsDues = smsDues;
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		setListAdapter(new ArrayAdapter<String>(
-				getActivity(), 
-				android.R.layout.simple_list_item_activated_1, 
-				lines));
-	}
-	
-	@Override
-    public void onStart() {
-        super.onStart();
-    }
-	
-	 @Override
-	    public void onAttach(Activity activity) {
-	        super.onAttach(activity);
-	 }
-	 
-	 @Override
-	 public void onListItemClick(ListView l, View v, int position, long id) {
-	      
-	 }
+	  public void onActivityCreated(Bundle savedInstanceState) {
+	    super.onActivityCreated(savedInstanceState);
+	    MsgViewAdapter adapter = new MsgViewAdapter(getActivity(), smsDues);
+	    setListAdapter(adapter);
+	  }
+
+	  @Override
+	  public void onListItemClick(ListView l, View v, int position, long id) {
+	    // do something with the data
+	  }
 }

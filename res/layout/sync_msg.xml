@@ -1,17 +1,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
-    
-    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/view_dues"
-        android:layout_width="0dip"
-        android:layout_height="match_parent" android:contentDescription="@string/view_desc"
-        android:src="@drawable/run_push"
-        android:layout_weight="1"
-        android:onClick="displayDue"
-        android:background="#999999"/>
-	
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/vendor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#40E0D0"
+            android:gravity="center"
+            android:text="Citibank"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="Rs. 2000"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/dueDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="16-Mar-2014"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
 </LinearLayout>
-    

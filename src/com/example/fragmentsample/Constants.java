@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class Constants {
 	
 	public static final Pattern smsDueMsgPattern = Pattern.compile("^.+(Rs.+[0-9]\\.[0-9]{2}).+([0-9]{2}-[0-9]{2}-[0-9]{2014}|[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}|[0-9]{2}-[A-Za-z]{3}-[0-9]{4}|[0-9]{2}-[A-Za-z]{3}-[0-9]{2}).+$");
-	public static final Pattern ddMMyyyy_withHyphenRegex = Pattern.compile("[0-9]{2}-[0-9]{2}-[0-9]{2014}");
+	public static final Pattern ddMMyyyy_withHyphenRegex = Pattern.compile("[0-9]{2}-[0-9]{2}-[0-9]{4}");
 	public static final Pattern ddMMyyyy_withDotRegex = Pattern.compile("[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}");
 	public static final Pattern ddMMMyy_withHyphenRegex = Pattern.compile("[0-9]{2}-[A-Za-z]{3}-[0-9]{2}");
 	public static final Pattern ddMMMyyyy_withHyphenRegex = Pattern.compile("[0-9]{2}-[A-Za-z]{3}-[0-9]{4}");

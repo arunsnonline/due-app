@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import com.example.fragmentsample.model.SmsDue;
+
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
+import android.util.Log;
 
 public class MainActivity extends FragmentActivity {
 
@@ -26,20 +28,16 @@ public class MainActivity extends FragmentActivity {
 				return;
 			}
 
-			StartPageFragment startPageFragment = new StartPageFragment();
-			getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, startPageFragment).addToBackStack("startPage").commit();
+			MsgStepListFragment msgStepListFragment = new MsgStepListFragment();
+			msgStepListFragment.setSmsDues(getDueBills());
+			msgStepListFragment.setArguments(getIntent().getExtras());
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, msgStepListFragment).commit();
 		}
 	}
 
-	private void onMenuSelect(List<String> dueMsgs) {
-		MsgStepListFragment msgStepListFragment = new MsgStepListFragment();
-		msgStepListFragment.setLines(dueMsgs);
-		msgStepListFragment.setArguments(getIntent().getExtras());
-		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, msgStepListFragment).addToBackStack("list").commit();
-	}
 
-	public void displayDue(View view) {
-		List<String> dueMsgs = new ArrayList<String>();
+	public List<SmsDue> getDueBills() {
+		List<SmsDue> dueMsgs = new ArrayList<SmsDue>();
 		Uri uriSMSURI = Uri.parse("content://sms/inbox");
 		String[] mProjection = { "address", "date", "body" };
 		Cursor cur = getContentResolver().query(uriSMSURI, mProjection, "body like '%due%' or body like '%bill%'", null, null);
@@ -72,15 +70,21 @@ public class MainActivity extends FragmentActivity {
 				Date due = null;
 				try {
 					due = dftoDate.parse(dueDate);
-					if(due.after(new Date())) {
-						dueMsgs.add("VENDOR : " + cur.getString(0) + " \n" + "Bill Amount : " + billAmt + " \n" + "Due Date : " + dftoStdFormat.format(due));
+					Date currentDate = new Date();
+					String current = dftoDate.format(currentDate); 
+					
+					//Log.i("MainActivity", "dueDate:"+dueDate+" "+"current:"+current);
+					if(dueDate.toLowerCase().equals(current.toLowerCase())||due.after(currentDate)) {
+						SmsDue smsDue= new SmsDue(cur.getString(0), billAmt, dftoStdFormat.format(due));
+						dueMsgs.add(smsDue);
 					}
 				} catch (ParseException e) {
-					dueMsgs.add("VENDOR : " + cur.getString(0) + " \n" + "Bill Amount : " + billAmt + " \n" + "Due Date : " + dueDate);
+					SmsDue smsDue= new SmsDue(cur.getString(0), billAmt, dueDate);
+					dueMsgs.add(smsDue);
 				}
 				i++;
 			}
 		}
-		onMenuSelect(dueMsgs);
+		return dueMsgs;
 	}
 }
