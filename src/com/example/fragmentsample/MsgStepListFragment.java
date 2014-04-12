@@ -8,6 +8,7 @@ import com.example.fragmentsample.model.SmsDue;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -31,6 +32,10 @@ public class MsgStepListFragment extends ListFragment{
 
 	  @Override
 	  public void onListItemClick(ListView l, View v, int position, long id) {
-	    // do something with the data
+		  
+		  	
+		 // if(v.getId()==R.id.a2c) {
+			  	Log.i("MyActivity", "Blah------>"+v.getId()+"pos------>"+position);
+		//  }
 	  }
 }
