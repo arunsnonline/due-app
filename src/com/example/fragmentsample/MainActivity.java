@@ -31,16 +31,18 @@ public class MainActivity extends FragmentActivity {
 			MsgStepListFragment msgStepListFragment = new MsgStepListFragment();
 			msgStepListFragment.setSmsDues(getDueBills());
 			msgStepListFragment.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, msgStepListFragment).commit();
+			getSupportFragmentManager().beginTransaction()
+					.replace(R.id.fragment_container, msgStepListFragment)
+					.commit();
 		}
 	}
-
 
 	public List<SmsDue> getDueBills() {
 		List<SmsDue> dueMsgs = new ArrayList<SmsDue>();
 		Uri uriSMSURI = Uri.parse("content://sms/inbox");
 		String[] mProjection = { "address", "date", "body" };
-		Cursor cur = getContentResolver().query(uriSMSURI, mProjection, "body like '%due%' or body like '%bill%'", null, null);
+		Cursor cur = getContentResolver().query(uriSMSURI, mProjection,
+				"body like '%due%' or body like '%bill%'", null, null);
 		int i = 1;
 		while (cur.moveToNext() && i < 5) {
 			String msgBody = cur.getString(2);
@@ -50,41 +52,45 @@ public class MainActivity extends FragmentActivity {
 				String billAmt = matcher.group(1);
 				String dueDate = matcher.group(2).trim();
 				matcher = Constants.ddMMyyyy_withHyphenRegex.matcher(dueDate);
-				if(matcher.find()){
+				if (matcher.find()) {
 					currentDatePattern = Constants.ddMMyyyy_withHyphen;
 				}
 				matcher = Constants.ddMMyyyy_withDotRegex.matcher(dueDate);
-				if(matcher.find()){
+				if (matcher.find()) {
 					currentDatePattern = Constants.ddMMyyyy_withDot;
 				}
 				matcher = Constants.ddMMMyyyy_withHyphenRegex.matcher(dueDate);
-				if(matcher.find()){
+				if (matcher.find()) {
 					currentDatePattern = Constants.ddMMMyyyy_withHyphen;
 				}
 				matcher = Constants.ddMMMyy_withHyphenRegex.matcher(dueDate);
-				if(matcher.find()){
+				if (matcher.find()) {
 					currentDatePattern = Constants.ddMMMyy_withHyphen;
 				}
 				DateFormat dftoDate = new SimpleDateFormat(currentDatePattern);
-				DateFormat dftoStdFormat = new SimpleDateFormat(Constants.STD_DATE_PATTERN);
+				DateFormat dftoStdFormat = new SimpleDateFormat(
+						Constants.STD_DATE_PATTERN);
 				Date due = null;
 				try {
 					due = dftoDate.parse(dueDate);
 					Date currentDate = new Date();
-					String current = dftoDate.format(currentDate); 
-					
-					//Log.i("MainActivity", "dueDate:"+dueDate+" "+"current:"+current);
-					if(dueDate.toLowerCase().equals(current.toLowerCase())||due.after(currentDate)) {
-						SmsDue smsDue= new SmsDue(cur.getString(0), billAmt, dftoStdFormat.format(due));
+					String current = dftoDate.format(currentDate);
+
+					if (dueDate.toLowerCase().equals(current.toLowerCase())
+							|| due.after(currentDate)) {
+						SmsDue smsDue = new SmsDue(cur.getString(0), billAmt,
+								dftoStdFormat.format(due));
 						dueMsgs.add(smsDue);
 					}
 				} catch (ParseException e) {
-					SmsDue smsDue= new SmsDue(cur.getString(0), billAmt, dueDate);
+					SmsDue smsDue = new SmsDue(cur.getString(0), billAmt,
+							dueDate);
 					dueMsgs.add(smsDue);
 				}
 				i++;
 			}
 		}
+		Log.i("MyActivity", "Blah------>"+dueMsgs.size());
 		return dueMsgs;
 	}
 }
