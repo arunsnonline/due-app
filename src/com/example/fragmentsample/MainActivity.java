@@ -96,6 +96,10 @@ public class MainActivity extends FragmentActivity {
 				if (dateMatcher.find()) {
 					currentDatePattern = Constants.ddMMMyyyy_withForwardSlash;
 				}
+				
+				if(totalDueAmt.isEmpty() || currentDatePattern.isEmpty())
+					continue;
+				
 				DateFormat dftoDate = new SimpleDateFormat(currentDatePattern);
 				Date due = null;
 				try {
