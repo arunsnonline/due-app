@@ -1,9 +1,9 @@
-package com.example.fragmentsample;
+package com.due.calc;
 
 import java.util.List;
 
-import com.example.fragmentsample.customadapter.MsgViewAdapter;
-import com.example.fragmentsample.model.SmsDue;
+import com.due.calc.customadapter.MsgViewAdapter;
+import com.due.calc.model.SmsDue;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;

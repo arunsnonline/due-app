@@ -1,4 +1,4 @@
-package com.example.fragmentsample;
+package com.due.calc;
 
 import java.util.regex.Pattern;
 

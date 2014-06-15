@@ -1,4 +1,4 @@
-package com.example.fragmentsample;
+package com.due.calc;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 
-import com.example.fragmentsample.model.SmsDue;
+import com.due.calc.model.SmsDue;
+import com.due.calc.R;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -43,7 +46,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private List<SmsDue> getDueBills() {
-		List<SmsDue> dueMsgs = new ArrayList<SmsDue>();
+		Set<SmsDue> dueMsgs = new HashSet<SmsDue>();
 		Uri uriSMSURI = Uri.parse("content://sms/inbox");
 		String[] mProjection = { "address", "date", "body" };
 		Cursor cur = getContentResolver().query(uriSMSURI, mProjection,
@@ -121,11 +124,12 @@ public class MainActivity extends FragmentActivity {
 				i++;
 			}
 		}
-		if (dueMsgs.size() > 0) {
-			Collections.sort(dueMsgs, new DueDateComparator());
+		List<SmsDue> sortedDueMsgs = new ArrayList<SmsDue>(dueMsgs);
+		if(sortedDueMsgs.size() > 0) {
+			Collections.sort(sortedDueMsgs, new DueDateComparator());
 		}
 		Log.i("MyActivity", "Blah------>" + dueMsgs.size());
-		return dueMsgs;
+		return sortedDueMsgs;
 	}
 
 	private class DueDateComparator implements Comparator<SmsDue> {

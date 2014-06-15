@@ -1,9 +1,9 @@
-package com.example.fragmentsample.customadapter;
+package com.due.calc.customadapter;
 
 import java.util.List;
 
-import com.example.fragmentsample.R;
-import com.example.fragmentsample.model.SmsDue;
+import com.due.calc.model.SmsDue;
+import com.due.calc.R;
 
 import android.content.Context;
 import android.util.Log;
